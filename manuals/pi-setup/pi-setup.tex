@@ -1,0 +1,150 @@
+\documentclass[12pt, a4paper, oneside]{article}
+
+\usepackage{geometry}
+
+% Hyperlinks
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, citecolor=RoyalBlue, linkcolor=PineGreen, linktoc=page, urlcolor=PineGreen}
+
+
+\title{Manual for setting up VespAlert on Raspberry Pi}
+\author{Andrew Corbett}
+\date{27$^{\mathrm{th}}$ May 2022}
+
+\begin{document}
+\maketitle
+
+\section{Requirements}
+
+\begin{itemize}
+\item
+Raspberry Pi 4 with at least 2GB of RAM.
+
+\item
+Micro SD card with at least 16GB of storage.
+
+\item
+SD card reader and a separate computer to flash the OS to the SD card.
+\end{itemize}
+
+
+\section{OS Installation}
+
+\begin{enumerate}
+
+\item
+Download the Raspberry Pi Imager from \href{https://www.raspberrypi.com/software/}{\texttt{www.raspberrypi.com/software}}.
+
+\item
+Flash the 64 bit installation of Ubuntu to the SD card.
+
+\item
+With SD card in Pi, turn on and set up.
+
+\end{enumerate}
+
+
+\section{PyTorch Installation}
+
+Open terminal and check pip3 is up to date:
+\begin{verbatim}
+	$ sudo apt-get install python3-pip 
+\end{verbatim}
+Install numpy:
+\begin{verbatim}
+$ sudo pip3 install numpy
+\end{verbatim}
+Install a nightly build of PyTorch and Torchvision for compatibility with the Pi's aarch64 (ARM) CPU. Check compatibility of these two packages for conflict: \url{https://github.com/pytorch/vision#instillation}.
+\begin{verbatim}
+$ sudo pip3 install --pre torch torchvision \
+-f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+\end{verbatim}
+Amend the nightly release for YOLOv5 compatibility:
+\begin{verbatim}
+$ sudo nano /usr/local/lib/python3.10/...
+dist-packages/torch/nn/modules/activation.py
+\end{verbatim}
+\begin{enumerate}
+\item
+Search with CTRL+W and type \texttt{return F.hardswish}
+\item
+Delete \texttt{self.inplace} from the arguments. (Exit and save with CTRL+X.)
+\end{enumerate}
+Install complimentary image libraries as not included in \texttt{torchvision>=10.0}:
+\begin{verbatim}
+$ sudo apt-get install libjpeg-dev
+$ sudo apt-get install zlib1g-dev
+$ sudo apt-get install libpng-dev
+\end{verbatim}
+To check package info:
+\begin{verbatim}
+$ pip3 show [package name]
+\end{verbatim}
+Add pillow to path:
+\begin{verbatim}
+export PATH="/home/detector/.local/bin:$PATH"
+export PATH="/home/detector/.local/lib:$PATH"
+\end{verbatim}
+Amend depreciation in \texttt{pillow=9.0} of version number:
+\begin{verbatim}
+$ sudo nano /home/andy/.local/lib/python3.10/...
+$ site-packages/PIL/__init__.py
+\end{verbatim}
+Declare
+\begin{verbatim}
+PILLOW_VERSION = __version__
+\end{verbatim}
+Install requirements file for YOLOv5:
+\begin{verbatim}
+$ sudo apt install -r path/to/yolov5/requirements.txt
+\end{verbatim}
+
+
+\section{For motion detection}
+Install Open CV and imutils
+
+\begin{verbatim}
+$ sudo apt install python3-opencv
+$ sudo pip install imutils
+\end{verbatim}
+
+
+\subsection{Fix for OpenCV function \texttt{cv2.imshow()}}
+
+Responding to
+\begin{verbatim}
+Warning: Ignoring XDG_SESSION_TYPE=wayland on Gnome.
+Use QT_QPA_PLATFORM=wayland to run on Wayland anyway
+\end{verbatim}
+
+\begin{enumerate}
+
+\item
+Disable Wayland by uncommenting \texttt{WaylandEnable=false} in
+\begin{verbatim}
+$ sudo nano /etc/gdm3/custom.conf
+\end{verbatim}
+
+\item
+Add \texttt{QT\_QPA\_PLATFORM=xcb} in
+\begin{verbatim}
+$ sudo nano /etc/environment
+\end{verbatim}
+
+\item
+Check whether you are on Wayland or Xorg using:
+\begin{verbatim}
+$ echo $XDG_SESSION_TYPE
+\end{verbatim}
+\end{enumerate}
+
+
+\section{For YOLOv5}
+
+\begin{verbatim}
+$ pip install -qr https://raw.githubusercontent.com/
+					ultralytics/yolov5/master/requirements.txt
+\end{verbatim}
+
+\end{document}
