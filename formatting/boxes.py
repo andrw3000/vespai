@@ -264,6 +264,7 @@ def check_bboxes(label_file, print_labels=False):
         num_crabro = 0
         num_velutina = 0
         for ann in new_coords:
+            print(len(ann))
             class_id, x0, y0, x1, y1 = ann
             if class_id == 0:
                 box_col = 'yellow'  # Vespa crabro

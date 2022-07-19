@@ -1,12 +1,9 @@
 import os
 import json
-import yaml
 import numpy as np
 import shutil
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
-from torchvision import transforms
 
 # Dictionary mapping class names to IDs in `bbox['class']`
 classes = {
