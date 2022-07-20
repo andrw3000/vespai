@@ -5,15 +5,15 @@ from vibe import BackgroundSubtractor
 
 # Parameters
 min_area = 13000  # Adjust to seperate hornets from wasps
-dilation_strength = 1  # To unify dijoint segmentation contours
-save_dir = '/monitor/examples/wasps/'
+dilation_strength = 2  # To unify dijoint segmentation contours
+save_dir = '/monitor/motions/portugal/'
 save_outputs = True
 
 # Instantiate ViBe (VIsual Background Extractor)
 back_sub = BackgroundSubtractor()
-ex = '/Users/Holmes/Research/Projects/vespai/datasets/' + \
-     'videos/wasps.mp4'
+ex = '/Users/Holmes/Research/Projects/vespai/datasets/videos/portugal.mp4'
 # cap = cv2.VideoCapture(0)
+
 cap = cv2.VideoCapture(ex)
 
 if not cap.isOpened():

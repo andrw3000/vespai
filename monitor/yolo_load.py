@@ -7,7 +7,7 @@ import torch
 
 root_dir = '/Users/Holmes/Research/Projects/vespai'
 yolo_dir = os.path.join(root_dir, 'models/yolov5')
-model_dir = os.path.join(root_dir, 'models/yolov5-params/yolov5s-220715.pt')
+model_dir = os.path.join(root_dir, 'models/yolov5-params/yolov5s-2021.pt')
 save_dir = os.path.join(root_dir, 'models/yolov5-runs/test/yolov5s-220715')
 os.makedirs(save_dir, exist_ok=True)
 sys.path.insert(0, yolo_dir)
