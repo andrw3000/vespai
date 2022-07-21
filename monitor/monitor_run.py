@@ -184,7 +184,7 @@ if __name__ == '__main__':
                         )
                         f.write(results_str)
 
-                time_passed = frame_id - last_email_frame >= args.frame_delay + 4
+                time_passed = frame_id - last_email_frame >= args.frame_delay
                 if args.enable_email and time_passed:
 
                     # Write email
@@ -195,7 +195,7 @@ if __name__ == '__main__':
                     dt = datetime.datetime.now()
                     text = 'Identification of {num:d} Vespa velutina ' \
                            'detected in frame {f:d} at {hr:02d}:{min:02d} ' \
-                           'on {d}/{m}/{y}.\n'.format(
+                           'on {d}/{m}/{y}.\n\n'.format(
                                num=num_ah_identified, f=frame_id, hr=dt.hour,
                                min=dt.minute, d=dt.day, m=dt.month, y=dt.year
                            )
