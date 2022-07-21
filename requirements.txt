@@ -26,12 +26,3 @@ notebook
 
 # Misc
 scikit-learn
-time
-# matplotlib
-# pillow
-# pyyaml
-# torch
-# torchvision
-# tqdm
-# numpy
-# opencv-python

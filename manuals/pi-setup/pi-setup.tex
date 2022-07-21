@@ -10,7 +10,7 @@
 
 \title{Manual for setting up VespAlert on Raspberry Pi}
 \author{Andrew Corbett}
-\date{27$^{\mathrm{th}}$ May 2022}
+\date{21$^{\mathrm{st}}$ July 2022}
 
 \begin{document}
 \maketitle
@@ -37,40 +37,58 @@ SD card reader and a separate computer to flash the OS to the SD card.
 Download the Raspberry Pi Imager from \href{https://www.raspberrypi.com/software/}{\texttt{www.raspberrypi.com/software}}.
 
 \item
-Flash the 64 bit installation of Ubuntu to the SD card.
+Flash the 64 bit installation of Ubuntu onto the SD card.
 
 \item
-With SD card in Pi, turn on and set up.
+With SD card in Pi, turn on and set up. Username: \texttt{detector}; computer name: \texttt{vespai}; pw: \texttt{alert}.
+
+\item
+Upgrade software
+\begin{verbatim}
+	$ sudo apt update
+	$ sudo apt upgrade -y
+\end{verbatim}
+Then search for \texttt{Software Updater} and follow instructions.
 
 \end{enumerate}
 
 
-\section{PyTorch Installation}
-
-Open terminal and check pip3 is up to date:
+\section{Basic installation}
+Open terminal and check software
 \begin{verbatim}
-	$ sudo apt-get install python3-pip 
+	$ sudo apt-get update -y
+\end{verbatim}
+
+Install or update pip3:
+\begin{verbatim}
+	$ sudo apt-get install -y python3-pip 
+\end{verbatim}
+
+\section{VespAI software}
+Save VespAI repo into home either by file transfer or cloning the GitHub repo
+\begin{verbatim}
+$ git clone https://github.com/andrw3000/vespai
+\end{verbatim}
+
+
+\section{PyTorch and dependencies}
+
+Install complimentary image libraries as not included in \texttt{torchvision>=10.0}:
+\begin{verbatim}
+$ sudo apt-get install -y zlib1g-dev
+$ sudo apt-get install -y libjpeg-dev
+$ sudo apt-get install -y libpng-dev
 \end{verbatim}
 Install numpy:
 \begin{verbatim}
 	$ sudo pip3 install numpy
 \end{verbatim}
-Install a nightly build of PyTorch and Torchvision for compatibility with the Pi's aarch64 (ARM) CPU. This currently gives versions 1.12.0 and 0.13.0, respectively. Check compatibility of these two packages for conflict: \url{https://github.com/pytorch/vision#instillation}.
+Install a nightly build of PyTorch and Torchvision for compatibility with the Pi's aarch64 (ARM) CPU. This currently gives versions 1.12.0 and 0.13.0, respectively.
 \begin{verbatim}
-	$ sudo pip3 install --pre torch torchvision \
+	$ sudo pip3 install --pre torch torchvision torchaudio \
 	--extra-index-url https://download.pytorch.org/whl/nightly/cpu
 \end{verbatim}
-%--pre torch torchvision \ -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
-Firstly test
-\begin{verbatim}
-$ python3 -c "import torch, torchvision; \
-print(torch.__version__, torchvision.__version__)"
-\end{verbatim}
-The returned output should read
-\begin{verbatim}
-UserWarning: Failed to load image Python extension"
-\end{verbatim}
-Amend installations for YOLOv5 compatibility as follows:
+Amend installation for YOLOv5 compatibility as follows:
 \begin{verbatim}
 $ sudo nano /usr/local/lib/python3.10/...
 dist-packages/torch/nn/modules/activation.py
@@ -81,33 +99,36 @@ Search with CTRL+W and type \texttt{return F.hardswish}
 \item
 Delete \texttt{self.inplace} from the arguments. (Exit and save with CTRL+X.)
 \end{enumerate}
-Install complimentary image libraries as not included in \texttt{torchvision>=10.0}:
+Perform test on importing torch and torchvision.
 \begin{verbatim}
-$ sudo apt-get install libjpeg-dev
-$ sudo apt-get install zlib1g-dev
-$ sudo apt-get install libpng-dev
+$ python3 -c "import torch, torchvision; \
+print(torch.__version__, torchvision.__version__)"
 \end{verbatim}
+The returned output should read
+\begin{verbatim}
+UserWarning: Failed to load image Python extension"
+\end{verbatim}
+We can live with that. This manual was written with
+\begin{verbatim}
+torch.__version__=1.12.0
+torchvision.__version__=0/13/0
+\end{verbatim}
+Check compatibility of these two packages at: \url{https://github.com/pytorch/vision#instillation}.
 To check package info:
 \begin{verbatim}
-$ pip3 show [package name]
+$ pip3 show [package]
 \end{verbatim}
-Add pillow to path:
-\begin{verbatim}
-export PATH="/home/detector/.local/bin:$PATH"
-export PATH="/home/detector/.local/lib:$PATH"
-\end{verbatim}
-Amend depreciation in \texttt{pillow=9.0} of version number:
-\begin{verbatim}
-$ sudo nano /home/andy/.local/lib/python3.10/...
-$ site-packages/PIL/__init__.py
-\end{verbatim}
-Declare
-\begin{verbatim}
-PILLOW_VERSION = __version__
-\end{verbatim}
+This will respond differently if one used sudo to install (and one should).
+%Add pillow to path:
+%\begin{verbatim}
+%export PATH="/home/detector/.local/bin:$PATH"
+%export PATH="/home/detector/.local/lib:$PATH"
+%\end{verbatim}
+
 Install requirements file for YOLOv5:
 \begin{verbatim}
-$ sudo apt install -r path/to/yolov5/requirements.txt
+$ sudo pip3 install -r \
+	/home/detector/vespai/models/yolov5/requirements.txt
 \end{verbatim}
 
 
