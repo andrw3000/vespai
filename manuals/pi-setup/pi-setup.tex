@@ -53,14 +53,24 @@ Open terminal and check pip3 is up to date:
 \end{verbatim}
 Install numpy:
 \begin{verbatim}
-$ sudo pip3 install numpy
+	$ sudo pip3 install numpy
 \end{verbatim}
-Install a nightly build of PyTorch and Torchvision for compatibility with the Pi's aarch64 (ARM) CPU. Check compatibility of these two packages for conflict: \url{https://github.com/pytorch/vision#instillation}.
+Install a nightly build of PyTorch and Torchvision for compatibility with the Pi's aarch64 (ARM) CPU. This currently gives versions 1.12.0 and 0.13.0, respectively. Check compatibility of these two packages for conflict: \url{https://github.com/pytorch/vision#instillation}.
 \begin{verbatim}
-$ sudo pip3 install --pre torch torchvision \
--f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+	$ sudo pip3 install --pre torch torchvision \
+	--extra-index-url https://download.pytorch.org/whl/nightly/cpu
 \end{verbatim}
-Amend the nightly release for YOLOv5 compatibility:
+%--pre torch torchvision \ -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+Firstly test
+\begin{verbatim}
+$ python3 -c "import torch, torchvision; \
+print(torch.__version__, torchvision.__version__)"
+\end{verbatim}
+The returned output should read
+\begin{verbatim}
+UserWarning: Failed to load image Python extension"
+\end{verbatim}
+Amend installations for YOLOv5 compatibility as follows:
 \begin{verbatim}
 $ sudo nano /usr/local/lib/python3.10/...
 dist-packages/torch/nn/modules/activation.py
