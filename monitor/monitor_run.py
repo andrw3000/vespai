@@ -81,6 +81,30 @@ def motion_alert(frame, vibe_model=None, area_tol=1.3e4, dilation_strength=2):
         return True, None
 
 
+def email_text(num_ah, num_eh, frame_id, dt):
+    """Hornet alert data to be emailed and saved.
+
+    Args:
+        num_ah: [int] number of Asian hornets in frame
+        num_eh: [int] number of European hornets in frame
+        frame_id: [int] frame index
+        dt: datetime object evaluated at hornet detection time
+    """
+    body = 'Identification of {num:d} hornets detected in frame ' \
+           '{f:d} at {hr:02d}:{min:02d} on {d}/{m}/{y}.\n\n' \
+           '\t{nah:d} Vespa velutina\n\t{neh:d} Vespa crabro'.format(
+               num=num_ah + num_eh, f=frame_id, hr=dt.hour, min=dt.minute,
+               d=dt.day, m=dt.month, y=dt.year, nah=num_ah, neh=num_eh,
+           )
+    filename = 'email-{nah:d}AH-{neh:d}EH-frame-{f:d}-{hr:02d}{min:02d}-' \
+               '{d}-{m}-{y}.jpeg'.format(
+                    f=frame_id, hr=dt.hour, min=dt.minute, d=dt.day,
+                    m=dt.month, y=dt.year, nah=num_ah, neh=num_eh,
+            )
+
+    return body, filename
+
+
 if __name__ == '__main__':
 
     # Identify saving directories
@@ -163,13 +187,15 @@ if __name__ == '__main__':
             img = cv2.cvtColor(next_frame, cv2.COLOR_BGR2RGB)
             results = model(img)
             predictions = results.pred[0]  # 0-th element of 1-elt list
-            num_ah_identified = 0
+            ah_count, eh_count = 0, 0
             for p in predictions:
                 if p[-1] == 1:
-                    num_ah_identified += 1
+                    ah_count += 1
+                if p[-1] == 0:
+                    eh_count += 1
 
-            if num_ah_identified > 0:
-                print(f'Positive AH detections in frame #{frame_id}')
+            if ah_count + eh_count > 0:
+                print(f'Positive hornet detections in frame #{frame_id}')
                 results.render()  # updates results.imgs with boxes and labels
                 img = cv2.cvtColor(results.imgs[0], cv2.COLOR_RGB2BGR)
                 if args.save:
@@ -184,7 +210,7 @@ if __name__ == '__main__':
                         )
                         f.write(results_str)
 
-                time_passed = frame_id - last_email_frame >= args.frame_delay
+                time_passed = frame_id - last_email_frame >= args.frame_delay + 4
                 if args.enable_email and time_passed:
 
                     # Write email
@@ -192,27 +218,19 @@ if __name__ == '__main__':
                     msg['Subject'] = 'VespAI detection'
                     msg['From'] = 'vespalert@outlook.com'
                     msg['To'] = ', '.join(args.recipients)
-                    dt = datetime.datetime.now()
-                    text = 'Identification of {num:d} Vespa velutina ' \
-                           'detected in frame {f:d} at {hr:02d}:{min:02d} ' \
-                           'on {d}/{m}/{y}.\n\n'.format(
-                               num=num_ah_identified, f=frame_id, hr=dt.hour,
-                               min=dt.minute, d=dt.day, m=dt.month, y=dt.year
-                           )
-                    msg.set_content(text)
+                    dt_object = datetime.datetime.now()
+                    email_body, email_filename = email_text(
+                        ah_count, eh_count, frame_id, dt_object,
+                    )
+                    msg.set_content(email_body)
 
                     # Attach image
                     new_w = 512
                     h, w = img.shape[:2]
                     img = cv2.resize(img, (new_w, int(h * new_w / w)))
-                    etext = 'email-{num:d}AH-frame{f:d}-{hr:02d}{min:02d}-' \
-                            '{d}-{m}-{y}.jpeg'.format(
-                               num=num_ah_identified, f=frame_id, hr=dt.hour,
-                               min=dt.minute, d=dt.day, m=dt.month, y=dt.year
-                            )
-                    ename = os.path.join(email_dir, etext)
-                    cv2.imwrite(ename, img)
-                    with open(ename, 'rb') as f:
+                    attachment = os.path.join(email_dir, email_filename)
+                    cv2.imwrite(attachment, img)
+                    with open(attachment, 'rb') as f:
                         img_data = f.read()
                         msg.add_attachment(img_data, maintype='image',
                                            subtype=imghdr.what(None, img_data))
