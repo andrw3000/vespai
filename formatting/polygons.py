@@ -74,26 +74,27 @@ def yolov5_polygons_from_json(data_dir, json_files):
                 'image_size': (image_info['height'], image_info['width']),
             }
 
-            for annotation in json_data['annotations']:
-                if annotation['image_id'] == image_info['id']:
+            if json_data['annotations'] is not None:
+                for annotation in json_data['annotations']:
+                    if annotation['image_id'] == image_info['id']:
 
-                    poly = annotation['segmentation']
-                    if np.array(poly).shape[0] == 1:
-                        xcoords = poly[0][0::2]
-                        ycoords = poly[0][1::2]
+                        poly = annotation['segmentation']
+                        if np.array(poly).shape[0] == 1:
+                            xcoords = poly[0][0::2]
+                            ycoords = poly[0][1::2]
 
-                    else:
-                        xcoords = [pair[0] for pair in poly]
-                        ycoords = [pair[1] for pair in poly]
+                        else:
+                            xcoords = [pair[0] for pair in poly]
+                            ycoords = [pair[1] for pair in poly]
 
-                    instance = {
-                        'class': annotation['category_id'] - 1,
-                        'coords': [],
-                    }
-                    for x, y in zip(xcoords, ycoords):
-                        instance['coords'].append([x, y])
+                        instance = {
+                            'class': annotation['category_id'] - 1,
+                            'coords': [],
+                        }
+                        for x, y in zip(xcoords, ycoords):
+                            instance['coords'].append([x, y])
 
-                    image_dict['instances'].append(instance)
+                        image_dict['instances'].append(instance)
 
             dict_list.append(image_dict)
         print(os.path.join(data_dir, file))
