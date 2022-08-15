@@ -100,7 +100,7 @@ def email_text(num_ah, num_eh, frame_id, dt):
                '{d}-{m}-{y}.jpeg'.format(
                     f=frame_id, hr=dt.hour, min=dt.minute, d=dt.day,
                     m=dt.month, y=dt.year, nah=num_ah, neh=num_eh,
-            )
+               )
 
     return body, filename
 
@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
     # Load YOLOv5 model
     yolo_dir = os.path.join(args.root, 'models/yolov5')
-    model_dir = os.path.join(args.root, 'models/yolov5-params/yolov5s-2021.pt')
+    model_dir = os.path.join(args.root, 'models/yolov5-params/yolov5s-21-ip.pt')
     sys.path.insert(0, yolo_dir)
     os.chdir(yolo_dir)
     model = torch.hub.load(
