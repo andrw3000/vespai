@@ -240,6 +240,9 @@ if __name__ == '__main__':
                     server.send_message(msg)
                     last_email_frame = frame_id
 
+        if args.print:
+            print('Frame ID: ', frame_id)
+            print(datetime.datetime.now())
         frame_id += 1
         time.sleep(args.brake)
     server.close()
