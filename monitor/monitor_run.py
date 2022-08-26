@@ -17,7 +17,7 @@ parser.add_argument('-a', '--min-motion-area', type=int, default=1.3e-4,
 parser.add_argument('-b', '--brake', type=float, default=5.0,
                     help="Seconds break between each frame detection.")
 parser.add_argument('-c', '--conf', type=float, default=0.8,
-                    help="Positive detection confidence threshold.")
+                    help="Positive detection confidence threshold in YOLOv5.")
 parser.add_argument('-d', '--dilation-strength', type=int, default=1,
                     help="No. dilations of active pixels, thickens detection")
 parser.add_argument('-e', '--enable-email', action='store_true',
@@ -123,6 +123,8 @@ if __name__ == '__main__':
         cap = cv2.VideoCapture(args.video)
     else:
         cap = cv2.VideoCapture(0)
+        cap.set(3, 1920)  # set the Horizontal resolution
+        cap.set(4, 1080)  # Set the Vertical resolution
 
     if not cap.isOpened():
         raise RuntimeError("Cannot open camera or video file.")
