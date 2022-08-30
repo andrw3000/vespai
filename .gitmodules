@@ -1,3 +1,9 @@
 [submodule "models/yolov5"]
 	path = models/yolov5
 	url = https://github.com/ultralytics/yolov5
+[submodule "explanation/lrp-resnet"]
+	path = explanation/lrp-resnet
+	url = https://github.com/dmitrysarov/LRP_decomposition
+[submodule "explanation/lrp-yolov5"]
+	path = explanation/lrp-yolov5
+	url = https://github.com/akarasman/yolo-heatmaps
