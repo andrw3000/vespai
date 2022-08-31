@@ -1,0 +1,93 @@
+\documentclass[12pt, a4paper, oneside]{article}
+
+\usepackage{geometry}
+
+% Hyperlinks
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, citecolor=RoyalBlue, linkcolor=PineGreen, linktoc=page, urlcolor=PineGreen}
+
+
+\title{Basic usage and installation from disk image for VespAI on Raspberry Pi 4}
+\author{Andrew Corbett}
+\date{26$^{\mathrm{st}}$ August 2022}
+
+\begin{document}
+\maketitle
+
+\section{Requirements}
+
+\begin{itemize}
+\item
+Raspberry Pi 4 with at least 2GB of RAM.
+
+\item
+Micro SD card with at least 16GB of storage.
+
+\item
+SD card reader and a separate computer to flash the OS to the SD card.
+\end{itemize}
+
+
+\section{Flash SD Card}
+
+With an SD card in you computer, you can wipe it and `flash' a new disk image to it, thus creating a carbon copy of the VespAI operating system for raspberry pi. One piece of software which executes this for you is Etcher: \url{https://www.balena.io/etcher/}.
+
+\section{Connect remotely via Secure Shell}
+
+\begin{enumerate}
+
+\item
+Using a keyboard, mouse and monitor, turn on Raspberry Pi, log in, and connect to local WiFi.
+
+\item
+Open terminal and execute \texttt{ip a} to print IP status. In the printout, under \texttt{eth0} look for the number next to \texttt{inet} excluding the slash and what follows. For example, the output of the \texttt{ip a} command may contain
+\begin{verbatim}
+	2: eth0: ...
+		inet: 192.168.1.225/10 brd...
+\end{verbatim}
+In this case the IP address to connect to the server is \texttt{192.168.1.225}.
+
+\item Shut down the Pi with \texttt{sudo halt} and disconnect from the power. You are now ready to reattach the Raspberry Pi in the field within range of this WiFi network. Plug into a power pack to turn on.
+
+\item
+On a remote device, connect to the server on the Pi via the \texttt{ssh} (Secure Shell) command. On macOS or linux this is completed via
+\begin{verbatim}
+	$ ssh detector@192.168.1.225
+\end{verbatim}
+followed by typing \texttt{yes} and enter (on the first connection). The password for \texttt{detector} is \texttt{alert}.
+
+\item
+On Windows one can download PuTTY; \url{https://www.putty.org}. Open this application and enter the IP address in the relevant box and click `OK'. Log in with
+\begin{verbatim}
+User name: detector
+Password: alert
+\end{verbatim}
+
+
+\end{enumerate}
+
+\section{Run experiment}
+
+Now accessing the server by the remote device, move to the repo directory:
+\begin{verbatim}
+	$ cd vespai
+\end{verbatim}
+and run an experiment
+
+\begin{verbatim}
+	$ sudo python3 monitor/monitor_run.py -c=0.8 -s -p \
+	-sd=monitor/detections/exp_name
+\end{verbatim}
+The slash is omitted and indicates a continuous line here. The flags give the option \texttt{-c} for the confidence threshold, \texttt{-s} for saving outputs, \texttt{-p} for printing on screen reports, \texttt{-sd} sets the save directory--change \texttt{exp\_name} to a specific experiment name.
+
+\section{Export results}
+
+Use the \texttt{scp} command (installed automatically with PuTTY) in terminal to save images onto the remote device:
+\begin{verbatim}
+	$ scp -r detector@192.168.1.225:/home/detector/vespai/monitor/detections \
+	<choose/a/local/file/path>
+\end{verbatim}
+Change the IP address to that of the server.
+
+\end{document}
