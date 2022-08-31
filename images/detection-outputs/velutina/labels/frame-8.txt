@@ -1,0 +1,5 @@
+      xmin       ymin        xmax        ymax  confidence  class           name
+949.776489 660.673950 1053.429565  832.135681    0.948844      1 Vespa velutina
+746.306030 971.003174  881.026611 1063.153320    0.864361      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.776489 660.673950 1053.429565  832.135681    0.948844      1 Vespa velutina
+746.306030 971.003174  881.026611 1063.153320    0.864361      1 Vespa velutina

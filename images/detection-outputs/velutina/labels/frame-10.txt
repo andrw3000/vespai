@@ -1,0 +1,3 @@
+      xmin       ymin        xmax        ymax  confidence  class           name
+949.075562 660.124573 1053.483032  833.867859    0.949645      1 Vespa velutina
+739.086914 942.005920  878.676453 1058.891968    0.827300      1 Vespa velutina

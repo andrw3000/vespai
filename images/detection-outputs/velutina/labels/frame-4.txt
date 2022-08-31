@@ -1,0 +1,13 @@
+      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina      xmin       ymin        xmax        ymax  confidence  class           name
+949.626160 661.497925 1052.934814  832.048279    0.946802      1 Vespa velutina
+758.779175 974.243835  890.495728 1060.252686    0.880796      1 Vespa velutina
