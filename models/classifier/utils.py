@@ -37,7 +37,7 @@ def predict(probs, threshold=0.8):
     return preds
 
 
-def accuracy(model, loader, thresholds=None, num_classes=2):
+def accuracy(model, activation, loader, thresholds=None, num_classes=2):
     """Computes the accuracy over a range of thresholds."""
 
     if thresholds is None:
@@ -52,9 +52,9 @@ def accuracy(model, loader, thresholds=None, num_classes=2):
         # totals[-1] += targets.shape[0] - torch.sum(targets)
 
         with torch.no_grad():
-            probs = model(images)
+            logits = model(images)
             for th, th_val in enumerate(thresholds):
-                preds = predict(probs, threshold=th_val)
+                preds = predict(activation(logits), threshold=th_val)
 
                 # Count correct values in each classes
                 correct[th, :-1] += torch.logical_and(
@@ -81,7 +81,7 @@ def onehot2ids(onehotmat):
     return class_ids
 
 
-def f1scores(model, loader):
+def f1scores(model, activation, loader):
     """Computes the F1 Score over a range of thresholds."""
 
     thresholds = list(torch.linspace(0., 1., 21))
@@ -91,9 +91,9 @@ def f1scores(model, loader):
     for images, targets in loader:
         y_true = torch.cat((y_true, onehot2ids(targets)), dim=0)
         with torch.no_grad():
-            probs = model(images)
+            logits = model(images)
         for th, th_val in enumerate(thresholds):
-            preds = predict(probs, threshold=th_val)
+            preds = predict(activation(logits), threshold=th_val)
             y_pred[th] = torch.cat((y_pred[th], onehot2ids(preds)), dim=0)
 
     f1 = []
