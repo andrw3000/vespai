@@ -132,7 +132,7 @@ if __name__ == '__main__':
     # Load YOLOv5 model
     yolo_dir = os.path.join(args.root, 'models/yolov5')
     model_dir = os.path.join(args.root,
-                             'models/yolov5-params/yolov5s-21ip.pt')
+                             'models/yolov5-params/yolov5s-21all22all.pt')
     sys.path.insert(0, yolo_dir)
     os.chdir(yolo_dir)
     model = torch.hub.load(
