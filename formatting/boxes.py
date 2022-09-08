@@ -151,13 +151,16 @@ def yolov5_boxes_from_json(data_dir, json_files, box_exp_factor=0.):
     return dict_list
 
 
-def split_train_val_test(data_dir, class_names=None):
+def split_train_val_test(data_dir, ratio=(80, 10, 10), class_names=None):
     """Split and move files into subsets.
 
     Args:
         data_dir: [str], dir containing COCO formatted Plainsight exports.
+        ratio: tuple of 3 percentages in which to split data
         class_names: (opt) Dictionary relating class_ids to names: print out.
     """
+
+    assert sum(ratio) == 100
 
     # Read images and annotations
     image_dir = os.path.join(data_dir, 'img')
@@ -170,19 +173,58 @@ def split_train_val_test(data_dir, class_names=None):
     images.sort()
     annotations.sort()
 
-    # Split the dataset into train/valid/test splits according to 80:10:10
-    train_img, val_img, train_ann, val_ann = train_test_split(
-        images, annotations, test_size=0.2, random_state=31, shuffle=True,
-    )
-    val_img, test_img, val_ann, test_ann = train_test_split(
-        val_img, val_ann, test_size=0.5, random_state=31, shuffle=True,
-    )
+    # Split the dataset into train/valid/test splits according to `ratio`
+    if ratio[0] == 100:
+        train_img = images
+        train_ann = annotations
+        val_img, val_ann, test_img, test_ann = [], [], [], []
+    elif ratio[1] == 100:
+        val_img = images
+        val_ann = annotations
+        train_img, train_ann, test_img, test_ann = [], [], [], []
+    elif ratio[2] == 100:
+        test_img = images
+        test_ann = annotations
+        train_img, train_ann, val_img, val_ann = [], [], [], []
+    elif ratio[0] == 0:
+        train_img, train_ann = [], []
+        val_img, test_img, val_ann, test_ann = train_test_split(
+            images, annotations,
+            test_size=(ratio[2] / sum(ratio)),
+            random_state=31, shuffle=True,
+        )
+    elif ratio[1] == 0:
+        val_img, val_ann = [], []
+        train_img, test_img, train_ann, test_ann = train_test_split(
+            images, annotations,
+            test_size=(ratio[2] / sum(ratio)),
+            random_state=31, shuffle=True,
+        )
+    elif ratio[1] == 0:
+        test_img, test_ann = [], []
+        train_img, val_img, train_ann, val_ann = train_test_split(
+            images, annotations,
+            test_size=(ratio[1] / sum(ratio)),
+            random_state=31, shuffle=True,
+        )
+    else:
+        train_img, val_img, train_ann, val_ann = train_test_split(
+            images, annotations,
+            test_size=(sum(ratio[1:]) / sum(ratio)),
+            random_state=31, shuffle=True,
+        )
+        val_img, test_img, val_ann, test_ann = train_test_split(
+            val_img, val_ann,
+            test_size=(ratio[2] / sum(ratio[1:])),
+            random_state=31, shuffle=True,
+        )
 
+    # Move images and annotations to relevant folders, even if empty for YOLOv5
     move_files_to_folder(train_img, os.path.join(data_dir, 'images/train'))
-    move_files_to_folder(val_img, os.path.join(data_dir, 'images/val'))
-    move_files_to_folder(test_img, os.path.join(data_dir, 'images/test'))
     move_files_to_folder(train_ann, os.path.join(data_dir, 'labels/train'))
+    move_files_to_folder(val_img, os.path.join(data_dir, 'images/val'))
     move_files_to_folder(val_ann, os.path.join(data_dir, 'labels/val'))
+    move_files_to_folder(test_img, os.path.join(data_dir, 'images/test'))
     move_files_to_folder(test_ann, os.path.join(data_dir, 'labels/test'))
 
     # Remove empty `img` and `ann` dirs

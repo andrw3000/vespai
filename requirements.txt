@@ -15,9 +15,11 @@ seaborn>=0.11.0
 
 # Jupyter
 ipython
+ipykernel
 ipywidgets
 jupyterthemes
 notebook
+nb_conda_kernels
 
 # LRP
 # cudatoolkit=10.1
