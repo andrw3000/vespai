@@ -1,7 +1,0 @@
-      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina      xmin       ymin       xmax       ymax  confidence  class           name
-950.043884 661.454285 1053.13623 831.865784    0.947472      1 Vespa velutina

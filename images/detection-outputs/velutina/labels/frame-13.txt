@@ -1,3 +1,0 @@
-      xmin       ymin        xmax        ymax  confidence  class           name
-948.761169 659.924011 1053.210327  834.390564    0.946476      1 Vespa velutina
-738.660278 932.144531  878.183716 1070.276733    0.851608      1 Vespa velutina
