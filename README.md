@@ -5,7 +5,7 @@ An object dectection and classification model to identify Asian hornets, *Vespa 
 ## Contents
 * [explanation](explanation) contains notebooks used for computing Layer-wise Relevance Propagation (LRP) heatmaps of trained model predictions.
 * [formatting](formatting) contains notebooks & scripts used to generate YOLOv5-ready training/testing data from the raw **Plainsight** labelling outputs.
-* [images](images) contains example graphics surra=ounding the project.
+* [images](images) contains example graphics surrounding the project.
 * [manuals](manuals) contains some documentation surrounding the Raspberry Pi implementation and usage.
 * [models](models) contains notebooks for training YOLOv5s models
   - [yolov5-params](models/yolov5-params) contains trained weights over various datasets, as well as a bespoke augmentation file for the training scripts.
