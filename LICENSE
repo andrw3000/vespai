@@ -1,6 +1,6 @@
-This repository is distributed under a CC BY-NC-SA 4.0 license, with all
-constituent packages listed in 'requirements.txt' falling under their
-own respective licenses.
+This repository is distributed under a CC BY-NC-SA 4.0 license, with
+constituent model code covered by an AGPL-3.0 license. All dependencies
+listed in 'requirements.txt' fall under their own respective licenses.
 
 Attribution-NonCommercial-ShareAlike 4.0 International
 
