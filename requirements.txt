@@ -6,8 +6,8 @@ Pillow>=10.4.0
 PyYAML>=6.0.2
 requests>=2.32.3
 scipy>=1.14.1
-torch>=2.4.1
-torchvision>=0.19.1
+torch=2.3.1
+torchvision=0.18.1
 tqdm>=4.66.5
 #protobuf<4.21.3  # https://github.com/ultralytics/yolov5/issues/8012
 pandas>=2.2.2
