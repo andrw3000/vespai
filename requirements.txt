@@ -1,25 +1,25 @@
 # YOLOv5
-matplotlib>=3.2.2
-numpy>=1.18.5
-opencv-python>=4.1.1
-Pillow>=7.1.2
-PyYAML>=5.3.1
-requests>=2.23.0
-scipy>=1.4.1
-torch>=1.7.0
-torchvision>=0.8.1
-tqdm>=4.64.0
-protobuf<4.21.3  # https://github.com/ultralytics/yolov5/issues/8012
-pandas>=1.1.4
-seaborn>=0.11.0
+matplotlib>=3.9.2
+numpy>=2.1.1
+opencv-python>=4.10.0.84
+Pillow>=10.4.0
+PyYAML>=6.0.2
+requests>=2.32.3
+scipy>=1.14.1
+torch>=2.4.1
+torchvision>=0.19.1
+tqdm>=4.66.5
+#protobuf<4.21.3  # https://github.com/ultralytics/yolov5/issues/8012
+pandas>=2.2.2
+seaborn>=0.13.2
 
 # Jupyter
-ipython
-ipykernel
-ipywidgets
-jupyterthemes
-notebook
-nb_conda_kernels
+#ipython
+#ipykernel
+#ipywidgets
+#jupyterthemes
+#notebook
+#nb_conda_kernels
 
 # LRP
 # cudatoolkit=10.1
@@ -27,4 +27,4 @@ nb_conda_kernels
 # scikit-image
 
 # Misc
-scikit-learn
+#scikit-learn
