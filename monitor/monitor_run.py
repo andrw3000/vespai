@@ -125,6 +125,12 @@ if __name__ == '__main__':
         cap = cv2.VideoCapture(0)
         cap.set(3, 1920)  # set the Horizontal resolution
         cap.set(4, 1080)  # Set the Vertical resolution
+        # Given that inference seems to run at ~1 Hz on RPi4,
+        # lets attempt to reduce detection latency by only
+        # buffering 1 frame. Also attempt to reduce load by
+        # running at a lower framerate.
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        cap.set(cv2.CAP_PROP_FPS, 5)
 
     if not cap.isOpened():
         raise RuntimeError("Cannot open camera or video file.")
