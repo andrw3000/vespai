@@ -200,7 +200,7 @@ if __name__ == '__main__':
             if ah_count + eh_count > 0:
                 print(f'Positive hornet detections in frame #{frame_id}')
                 results.render()  # updates results.imgs with boxes and labels
-                img = cv2.cvtColor(results.imgs[0], cv2.COLOR_RGB2BGR)
+                img = cv2.cvtColor(results.ims[0], cv2.COLOR_RGB2BGR)
                 if args.save:
                     fname = os.path.join(frame_dir, f'frame-{frame_id}.jpeg')
                     lname = os.path.join(label_dir, f'frame-{frame_id}.txt')
