@@ -12,6 +12,7 @@ tqdm>=4.66.5
 #protobuf<4.21.3  # https://github.com/ultralytics/yolov5/issues/8012
 pandas>=2.2.2
 seaborn>=0.13.2
+filetype>=1.2.0
 
 # Jupyter
 #ipython

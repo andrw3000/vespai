@@ -6,7 +6,7 @@ import torch
 import datetime
 import argparse
 import smtplib
-import imghdr
+import filetype
 from email.message import EmailMessage
 from vibe import BackgroundSubtractor
 
@@ -235,8 +235,9 @@ if __name__ == '__main__':
                     cv2.imwrite(attachment, img)
                     with open(attachment, 'rb') as f:
                         img_data = f.read()
+                        file_kind = filetype.guess(img_data)
                         msg.add_attachment(img_data, maintype='image',
-                                           subtype=imghdr.what(None, img_data))
+                                           subtype=file_kind.extension)
 
                     # Send email
                     server.send_message(msg)
