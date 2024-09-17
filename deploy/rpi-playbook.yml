@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: Update apt repo cache and install git.
+    ansible.builtin.apt:
+      name: git
+      update_cache: yes
+
+  - name: Download VespAI git repo; recurse/fetch any submodules.
+    ansible.builtin.git:
+      repo: '{{ vespai_repo }}'
+      dest: /opt/vespai
+      version: '{{ vespai_branch }}'
+      recursive: true
+
+  - name: Make user owner of the git repo.
+    ansible.builtin.file:
+      path: /opt/vespai
+      state: directory
+      recurse: yes
+      owner: '{{ user }}'
+      group: users
+
+  - name: Install pip.
+    ansible.builtin.apt:
+      name: python3-pip
+
+  - name: Install VespAI repo python requirements
+    ansible.builtin.pip:
+      requirements: /opt/vespai/deploy/requirements.txt
+      virtualenv: /opt/vespai-venv
+      virtualenv_command: "/usr/bin/python -m venv"
+
+  - name: Make user the owner of the venv directory.
+    ansible.builtin.file:
+      path: /opt/vespai-venv
+      state: directory
+      recurse: yes
+      owner: '{{ user }}'
+      group: users
