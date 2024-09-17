@@ -15,7 +15,7 @@ Here are some notes on how you can get the VespAI detection running using the pr
 	    Where:
 	    - `<microsd-card-device-file>` is the device file of your microSD card (please be careful).
 
- 2. **Boot your Raspberry Pi** and [step through the initial setup and configuration](https://www.raspberrypi.com/documentation/computers/getting-started.html#set-up-your-raspberry-pi).
+ 2. **Boot your Raspberry Pi** and [step through the initial setup and configuration](https://www.raspberrypi.com/documentation/computers/getting-started.html#set-up-your-raspberry-pi), if necessary.
 
  3. **Enable the `ssh` server on your Raspberry Pi**, using `raspi-config` [interactively](https://www.raspberrypi.com/documentation/computers/configuration.html#ssh) or on the [command line](https://www.raspberrypi.com/documentation/computers/configuration.html#ssh-nonint).
 
