@@ -55,4 +55,4 @@ Here are some notes on how you can get the VespAI detection running using the pr
 
 ## Manual setup
 
-Follow steps 1-3 of the above, and then refer to the [`rpi-playbook.yml` Ansible playbook file](rpi-playbook.yml) and the adjacent [`requirements.txt` file](requirements.txt) to manually step through the process of installing git, downloading the VespAI git repo, and using `pip install` (potentially in a virtual environment created with `python -m venv <virtual-environment-name>`) to install requirements.
+Follow steps 1-3 of the above, and then refer to the [`rpi-playbook.yml` Ansible playbook file](rpi-playbook.yml) and the adjacent [`requirements.txt` file](requirements.txt) to manually step through the process of installing git, downloading the VespAI git repo, and using `pip install` (potentially in a virtual environment created with `python -m venv <virtual-environment-name>`) to install dependencies.
