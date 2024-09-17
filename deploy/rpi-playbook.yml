@@ -8,12 +8,23 @@
       name: git
       update_cache: yes
 
-  - name: Download VespAI git repo; recurse/fetch any submodules.
+  - name: Download VespAI git repo; recurse/fetch and track/update submodules.
     ansible.builtin.git:
       repo: '{{ vespai_repo }}'
       dest: /opt/vespai
       version: '{{ vespai_branch }}'
       recursive: true
+      # NOTE: track_submodules causes the ansible git module to update/track to the
+      # latest commit in each submodule; this resolves the "missing commit" issue
+      # (see https://github.com/andrw3000/vespai/issues/1). The following task
+      # manually checks out the commit originally synced with the vespai main.
+      track_submodules: true
+
+  - name: Revert yolov5 submodule to commit 23701eac (see note in preceding task).
+    ansible.builtin.git:
+      repo: https://github.com/ultralytics/yolov5
+      dest: /opt/vespai/models/yolov5
+      version: 23701eac7a7b160e478ba4bbef966d0af9348251
 
   - name: Make user owner of the git repo.
     ansible.builtin.file:
