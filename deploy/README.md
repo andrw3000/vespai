@@ -18,9 +18,9 @@ Here are some notes on how you can get the VespAI detection running using the pr
 > It is also recommended to configure your Ansible control node and Raspberry Pi to use [public key authentication](https://help.ubuntu.com/community/SSH/OpenSSH/Keys), by generating RSA keys on the control node and transferring/copying the public key to the Raspberry Pi. _This is the recommended method for Ansible authentication, and makes running its playbooks easier (without depending on `sshpass` and interactive password authentication)._
 
  5. Run the Ansible playbook with:
- ```
- ansible-playbook deploy/rpi-playbook.yml --inventory=<rpi-host>, --extra-vars "user=<username> vespai_repo=<git-repo-url> vespai_branch=<git-repo-branch>"
- ```
+	 ```
+	 ansible-playbook deploy/rpi-playbook.yml --inventory=<rpi-host>, --extra-vars "user=<username> vespai_repo=<git-repo-url> vespai_branch=<git-repo-branch>"
+	 ```
  
     Where:
     - `<rpi-host>` is the hostname or IP address of your Raspberry Pi.
