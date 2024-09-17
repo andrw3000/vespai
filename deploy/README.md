@@ -6,7 +6,14 @@ Here are some notes on how you can get the VespAI detection running using the pr
 
  1. Download and install Raspberry Pi OS (64 bit) to a microSD card, using [one of the available methods](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-an-operating-system), for example:
     - Using [Raspberry Pi Imager](https://www.raspberrypi.com/documentation/computers/getting-started.html#install-using-imager), which has a simple GUI.
-    - Direct download of [Raspberry Pi OS (64 bit)](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit) and then `dd` on the shell command-line, for example: `$ xzcat ./<image-file>.img.xz | sudo dd of=/dev/<microsd-card-device-file> bs=4M conv=fsync status=progress`
+    - Direct download of [Raspberry Pi OS (64 bit)](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-64-bit) and then `dd` on the shell command-line, for example:
+
+    ```
+    xzcat ./<image-file>.img.xz | sudo dd of=/dev/<microsd-card-device-file> bs=4M conv=fsync status=progress
+    ```
+
+    Where:
+    - `<microsd-card-device-file>` is the device file of your microSD card (please be careful).
 
  2. Insert the microSD card into the Raspberry Pi and [step through the initial setup and configuration](https://www.raspberrypi.com/documentation/computers/getting-started.html#set-up-your-raspberry-pi), as appropriate.
 
@@ -21,7 +28,7 @@ Here are some notes on how you can get the VespAI detection running using the pr
 	 ```
 	 ansible-playbook deploy/rpi-playbook.yml --inventory=<rpi-host>, --extra-vars "user=<username> vespai_repo=<git-repo-url> vespai_branch=<git-repo-branch>"
 	 ```
- 
+
     Where:
     - `<rpi-host>` is the hostname or IP address of your Raspberry Pi.
     - `<username>` is the name of the primary user you setup on your Raspberry Pi.
