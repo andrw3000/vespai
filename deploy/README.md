@@ -44,7 +44,7 @@ Here are some notes on how you can get the VespAI detection running using the pr
 	 Or alternatively, to save detection frames:
 
 	  ```
-	  source /opt/vespai-venv/bin/activate && (cd /opt/vespai ; python monitor/monitor_run.py  --root=/opt/vespai --print --save --save-dir <save-directory>
+	  source /opt/vespai-venv/bin/activate && (cd /opt/vespai ; python monitor/monitor_run.py  --root=/opt/vespai --print --save --save-dir <save-directory>)
 	  ```
 
 	 Where:
