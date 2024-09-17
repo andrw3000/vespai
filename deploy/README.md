@@ -19,8 +19,9 @@ Here are some notes on how you can get the VespAI detection running using the pr
 
  5. Run the Ansible playbook with:
  ```
- $ ansible-playbook deploy/rpi-playbook.yml --inventory=<rpi-host>, --extra-vars "user=<username> vespai_repo=<git-repo-url> vespai_branch=<git-repo-branch>"
+ ansible-playbook deploy/rpi-playbook.yml --inventory=<rpi-host>, --extra-vars "user=<username> vespai_repo=<git-repo-url> vespai_branch=<git-repo-branch>"
  ```
+ 
     Where:
     - `<rpi-host>` is the hostname or IP address of your Raspberry Pi.
     - `<username>` is the name of the primary user you setup on your Raspberry Pi.
@@ -28,7 +29,7 @@ Here are some notes on how you can get the VespAI detection running using the pr
     - `<git-repo-branch` is the branch-name (or other git ref) in the git repo, e.g. `ansible-deployment`
 
   6. All being well, you should now be able to run the VespAI example detection script, by activating the `venv` that was created by the Ansible playbook and then running the script, for example:
-     - `$ source /opt/vespai-venv/bin/activate`
+     - `source /opt/vespai-venv/bin/activate`
      - `$ cd /opt/vespai`
      - `$ python monitor/monitor_run.py  --root=/opt/vespai --print --save --save-dir ~/detections`
 
