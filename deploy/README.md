@@ -41,6 +41,15 @@ Here are some notes on how you can get the VespAI detection running using the pr
 	  source /opt/vespai-venv/bin/activate && (cd /opt/vespai ; python monitor/monitor_run.py  --root=/opt/vespai --print)
 	  ```
 
+	 Or alternatively, to save detection frames:
+
+	  ```
+	  source /opt/vespai-venv/bin/activate && (cd /opt/vespai ; python monitor/monitor_run.py  --root=/opt/vespai --print --save --save-dir <save-directory>
+	  ```
+
+	 Where:
+     - `<save-directory>` is the directory which should be created/used to save detection frames and `pandas` results/labels.
+
 ## Manual setup
 
 Follow steps 1-3 of the above, and then refer to the [`rpi-playbook.yml` Ansible playbook file](rpi-playbook.yml) and the adjacent [`requirements.txt` file](requirements.txt) to manually step through the process of installing git, downloading the VespAI git repo, and using `pip install` (potentially in a virtual environment created with `python -m venv <virtual-environment-name>`) to install requirements.
