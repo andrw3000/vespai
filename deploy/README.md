@@ -35,6 +35,9 @@ Here are some notes on how you can get the VespAI detection running using the pr
     - `<git-repo-url>` is the URL of the git repo, e.g. `https://github.com/andrw3000/vespai.git`
     - `<git-repo-branch` is the branch-name (or other git ref) in the git repo, e.g. `ansible-deployment`
 
+> [!NOTE]
+> This playbook clones the vespai repository and tracks/updates all submodules (to mitigate issue #1); it subsequently checks out the `models/yolov5` submodule to [commit `23701eac`](https://github.com/ultralytics/yolov5/tree/23701eac7a7b160e478ba4bbef966d0af9348251), which was at the [HEAD of main branch](https://github.com/andrw3000/vespai/tree/786c394a8835cc2850ec3a462a8aaaf2e8520172/models) when I first created this playbook. _Using the older commit/version of `yolov5` stops it automatically trying to download newer package versions/dependencies; also, `monitor/monitor_run.py` throws a `ModuleNotFoundError` exception when run with the current HEAD of `yolov5` main branch._
+
   6. **Run the VespAI example detection script**, by activating the `venv` (that was created by the Ansible playbook), attaching a suitable USB camera and then running the script, for example:
 
 	  ```
