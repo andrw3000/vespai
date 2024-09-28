@@ -6,7 +6,7 @@ import torch
 import datetime
 import argparse
 import smtplib
-import imghdr
+import filetype
 from email.message import EmailMessage
 from vibe import BackgroundSubtractor
 
@@ -125,6 +125,12 @@ if __name__ == '__main__':
         cap = cv2.VideoCapture(0)
         cap.set(3, 1920)  # set the Horizontal resolution
         cap.set(4, 1080)  # Set the Vertical resolution
+        # Given that inference seems to run at ~1 Hz on RPi4,
+        # lets attempt to reduce detection latency by only
+        # buffering 1 frame. Also attempt to reduce load by
+        # running at a lower framerate.
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        cap.set(cv2.CAP_PROP_FPS, 5)
 
     if not cap.isOpened():
         raise RuntimeError("Cannot open camera or video file.")
@@ -200,7 +206,7 @@ if __name__ == '__main__':
             if ah_count + eh_count > 0:
                 print(f'Positive hornet detections in frame #{frame_id}')
                 results.render()  # updates results.imgs with boxes and labels
-                img = cv2.cvtColor(results.imgs[0], cv2.COLOR_RGB2BGR)
+                img = cv2.cvtColor(results.ims[0], cv2.COLOR_RGB2BGR)
                 if args.save:
                     fname = os.path.join(frame_dir, f'frame-{frame_id}.jpeg')
                     lname = os.path.join(label_dir, f'frame-{frame_id}.txt')
@@ -235,8 +241,9 @@ if __name__ == '__main__':
                     cv2.imwrite(attachment, img)
                     with open(attachment, 'rb') as f:
                         img_data = f.read()
+                        file_kind = filetype.guess(img_data)
                         msg.add_attachment(img_data, maintype='image',
-                                           subtype=imghdr.what(None, img_data))
+                                           subtype=file_kind.extension)
 
                     # Send email
                     server.send_message(msg)
