@@ -148,11 +148,12 @@ if __name__ == '__main__':
 
     # Set up email server
     if args.enable_email:
-        server = smtplib.SMTP('smtp.office365.com', 587)
+        import email_config
+        server = smtplib.SMTP(email_config.EMAIL_SERVER, email_config.EMAIL_PORT)
         # server.set_debuglevel(1)
         server.ehlo()
         server.starttls()
-        server.login('vespalert@outlook.com', 'kitchenqu33n')
+        server.login(email_config.EMAIL_USER, email_config.EMAIL_PASSWORD)
 
     # Collect first frame
     ret0, frame0 = cap.read()
